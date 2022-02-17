@@ -53,8 +53,6 @@
       };
       let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
       if (isMobile() || isIPad) {
-          var myobj = document.getElementById("unity-canvas");
-          myobj.remove();
           var myVideo = document.getElementById("videosrc");
           const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
@@ -110,19 +108,14 @@
             case "365": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3AvOS9wOUxGelJTbHlOYk9zOGNhblNmdzZDbXNWYlNnOTh5RUY2RnFWQkRKcWgubXA0/original.mp4"; break;
           }
 
-          alert("Hello");
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
           if (src === "") {
             let myobj2 = document.getElementById("my-video");
-            alert("my-vide remove");
             myobj2.remove();
-            alert("my-vide removed");
           } else {
             let myobj3 = document.getElementById("book-list");
-            alert("book-lis remove");
             myobj3.remove();
-            alert("book-lis removed");
             myVideo.src = src;
           }
       } else {

@@ -148,10 +148,10 @@
             case "363": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3LzQvNC80NFJSMTdUOUNiOW5SMllheUJJbFdUU3NQd1hsV3hrMGV0Q2Fyc1E3Rm4ubXA0/original.mp4"; break;
             case "365": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3AvOS9wOUxGelJTbHlOYk9zOGNhblNmdzZDbXNWYlNnOTh5RUY2RnFWQkRKcWgubXA0/original.mp4"; break;
           }
+          myVideo.src = src;
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
-          myVideo.src = src;
           if (src === "") {
             let myobj2 = document.getElementById("my-video");
             myobj2.remove();

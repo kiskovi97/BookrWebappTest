@@ -114,17 +114,17 @@
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
           if (src == "") {
-            myobj = document.getElementById("my-video");
-            myobj.remove();
+            let myobj2 = document.getElementById("my-video");
+            myobj2.remove();
           } else {
-            myobj = document.getElementById("book-list");
-            myobj.remove();
+            let myobj3 = document.getElementById("book-list");
+            myobj3.remove();
           }
       } else {
           var myobj = document.getElementById("my-video");
           myobj.remove();
-          myobj = document.getElementById("book-list");
-          myobj.remove();
+          let myobj2 = document.getElementById("book-list");
+          myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
             dataUrl: "Build/22.data.unityweb",

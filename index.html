@@ -45,16 +45,8 @@
     <script>
       var isMobile = function() {
         let check = false;
-        (function(a){
-          if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(a))
-           check = true;
-           }
-           )(navigator.userAgent||navigator.vendor||window.opera);
-        return check;
+        (function(a){ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(a)) check = true; } )(navigator.userAgent||navigator.vendor||window.opera); return check;
       };
-      alert(navigator.userAgent);
-      alert(navigator.vendor);
-      alert(navigator.opera);
       let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
       if (isMobile() || isIPad) {
           var myobj = document.getElementById("unity-canvas");

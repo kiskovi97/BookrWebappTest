@@ -147,10 +147,7 @@
             case "365": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3AvOS9wOUxGelJTbHlOYk9zOGNhblNmdzZDbXNWYlNnOTh5RUY2RnFWQkRKcWgubXA0/original.mp4"; break;
           }
           myVideo.src = src;
-          alert(myVideo.src);
-          myVideo.style.display='none';
-          myVideo.offsetHeight; // no need to store this anywhere, the reference is enough
-          myVideo.style.display='block';
+          myVideo.load();
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();

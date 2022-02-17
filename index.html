@@ -32,13 +32,12 @@
     </style>
   </head>
   <body style="text-align: center">
-    <canvas id="unity-canvas" style="background: url('Build/22.jpg') center / cover"></canvas>
-    <video id="my-video" controls>
+    <canvas id="unity-canvas" style="background: url('Build/23.jpg') center / cover"></canvas>
+    <video id="my-video" controls >
       <source id="videosrc" src="https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4" type="video/mp4" />
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
     </video>
-    <script src="Build/22.loader.js"></script>
     <ul id="book-list">
       <li><h3><a href="?book=97">Gondri, the Black Dog</a></h3></li>
       <li><h3><a href="?book=406">Thanksgiving</a></h3></li>
@@ -85,6 +84,7 @@
       <li><h3><a href="?book=363">Class Play</a></h3></li>
       <li><h3><a href="?book=365">Don't Let Auntie Mabel Bless the Table</a></h3></li>
     </ul>
+    <script src="Build/23.loader.js"></script>
     <script>
       var isMobile = function() {
         let check = false;
@@ -96,7 +96,7 @@
           const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
           });
-          var src = "";
+          var src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4";
           switch (params.book) {
             case "97": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4"; break;
             case "517": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID517bc_20220124165403.mp4"; break;
@@ -165,9 +165,9 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/22.data.unityweb",
-            frameworkUrl: "Build/22.framework.js.unityweb",
-            codeUrl: "Build/22.wasm.unityweb",
+            dataUrl: "Build/23.data.unityweb",
+            frameworkUrl: "Build/23.framework.js.unityweb",
+            codeUrl: "Build/23.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",

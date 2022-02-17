@@ -36,7 +36,7 @@
   <body style="text-align: center">
     <canvas id="unity-canvas" style="background: url('Build/22.jpg') center / cover"></canvas>
     <video id="my-video" controls >
-      <source id="videosrc" src="https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4" type="video/mp4" />
+      <source id="videosrc" src="" type="video/mp4" />
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
     </video>
@@ -151,13 +151,13 @@
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
+          myVideo.src = src;
           if (src === "") {
             let myobj2 = document.getElementById("my-video");
             myobj2.remove();
           } else {
             let myobj3 = document.getElementById("book-list");
             myobj3.remove();
-            myVideo.src = src;
           }
       } else {
           var myobj = document.getElementById("my-video");

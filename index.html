@@ -42,6 +42,10 @@
         web browser that
     </video>
     <script src="Build/22.loader.js"></script>
+    <ul id="book-list">
+      <li><a href="/?book=409">409 book</a></li>
+      <li><a href="/?book=97">97 book</a></li>
+    </ul>
     <script>
       var isMobile = function() {
         let check = false;
@@ -55,7 +59,7 @@
           const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
           });
-          var src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4";
+          var src = "";
           switch (params.book) {
             case "97": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4"; break;
             case "517": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID517bc_20220124165403.mp4"; break;
@@ -106,8 +110,20 @@
             case "365": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3AvOS9wOUxGelJTbHlOYk9zOGNhblNmdzZDbXNWYlNnOTh5RUY2RnFWQkRKcWgubXA0/original.mp4"; break;
           }
           myVideo.src = src;
+
+          var myobj = document.getElementById("unity-canvas");
+          myobj.remove();
+          if (src == "") {
+            myobj = document.getElementById("my-video");
+            myobj.remove();
+          } else {
+            myobj = document.getElementById("book-list");
+            myobj.remove();
+          }
       } else {
           var myobj = document.getElementById("my-video");
+          myobj.remove();
+          myobj = document.getElementById("book-list");
           myobj.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {

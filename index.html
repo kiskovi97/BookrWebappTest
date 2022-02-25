@@ -165,7 +165,6 @@
               const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
               });
-              alert(params);
               alert(params.book);
               var result = {
                   bookId: params.book,

@@ -147,6 +147,7 @@
           myVideo.src = src;
           document.getElementById("my-video").load();
           document.getElementById('my-video').addEventListener('ended',myHandler,false);
+          document.getElementById('my-video').addEventListener('pause',myHandler,false);
           function myHandler(e) {
               // What you want to do after the event
               console.log(e);

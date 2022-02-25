@@ -33,7 +33,7 @@
   </head>
   <body style="text-align: center">
     <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg') center / cover"></canvas>
-    <video id="my-video" controls >
+    <video id="my-video" controls playsinline>
       <source id="videosrc" src="https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4" type="video/mp4" />
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
@@ -149,7 +149,6 @@
           document.getElementById('my-video').addEventListener('ended',myHandler,false);
           document.getElementById('my-video').addEventListener('pause',myHandler,false);
           document.getElementById('my-video').addEventListener('play',myStartHandler,false);
-          var today = new Date();
           var started = new Date();
           function myStartHandler(e) {
             started = new Date();

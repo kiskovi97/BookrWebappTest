@@ -155,15 +155,8 @@
             started = new Date();
           }
           function myHandler(e) {
-              // What you want to do after the event
-              console.log(e);
-              // Hours part from the timestamp
               var ended = new Date();
-              console.log(today)
-              console.log(started)
-              console.log(ended)
               var distance = (ended.getTime() - started.getTime()) / 1000;
-              console.log(distance)
               var result = {
                   bookId: params.book,
                   userId: null,
@@ -172,7 +165,9 @@
                   pagesVisited: [],
                   lastPageVisited: 0,
               };
-              console.log(result)
+              var resultJson = JSON.stringify(result)
+              console.log(resultJson)
+              window.top.postMessage(resultJson, '*');
           }
 
           var myobj = document.getElementById("unity-canvas");

@@ -146,14 +146,14 @@
           }
           myVideo.src = src;
           document.getElementById("my-video").load();
-          document.getElementById('my-video').addEventListener('ended',myHandler,false);
-          document.getElementById('my-video').addEventListener('pause',myHandler,false);
+          document.getElementById('my-video').addEventListener('ended',myEndHandler,false);
+          document.getElementById('my-video').addEventListener('pause',myEndHandler,false);
           document.getElementById('my-video').addEventListener('play',myStartHandler,false);
           var started = new Date();
           function myStartHandler(e) {
             started = new Date();
           }
-          function myHandler(e) {
+          function myEndHandler(e) {
               var ended = new Date();
               var distance = (ended.getTime() - started.getTime()) / 1000;
               const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -169,9 +169,7 @@
               };
               var resultJson = JSON.stringify(result)
               console.log(resultJson)
-              //window.postMessage(resultJson, '*');
               window.top.postMessage(resultJson, '*');
-              //window.parent.postMessage(resultJson, '*');
           }
 
           var myobj = document.getElementById("unity-canvas");
@@ -190,9 +188,9 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/2a772647d66edaf9c559cee55e2b8b3b.unityweb",
+            dataUrl: "Build/4b15dfe54bb87c9a8d6bcb6291209fd0.unityweb",
             frameworkUrl: "Build/f74780e70c023601f6d6d1f0386cc9b5.unityweb",
-            codeUrl: "Build/a615a7e81a300824c3326101b4bca463.unityweb",
+            codeUrl: "Build/2f12776a2466ed78d3b610a83e8548a3.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",

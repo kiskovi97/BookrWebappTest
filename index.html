@@ -156,7 +156,7 @@
               var ended = new Date();
               console.log(today)
               console.log(ended)
-              var distance = ended - today;
+              var distance = ended.getSeconds() - today.getSeconds();
               console.log(distance)
               var result = {
                   bookId: params.book,

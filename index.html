@@ -162,12 +162,12 @@
               console.log(today)
               console.log(started)
               console.log(ended)
-              var distance = ended.getSeconds() - started.getSeconds();
+              var distance = (ended.getTime() - started.getTime()) / 1000;
               console.log(distance)
               var result = {
                   bookId: params.book,
                   userId: null,
-                  startedAt: today,
+                  startedAt: started,
                   duration: distance,
                   pagesVisited: [],
                   lastPageVisited: 0,

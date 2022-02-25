@@ -148,13 +148,14 @@
           document.getElementById("my-video").load();
           document.getElementById('my-video').addEventListener('ended',myHandler,false);
           document.getElementById('my-video').addEventListener('pause',myHandler,false);
+          var today = new Date();
           function myHandler(e) {
               // What you want to do after the event
               console.log(e);
               // Hours part from the timestamp
-              var date = new Date(e.timeStamp);
-              console.log(date.getTime())
-              console.log(date)
+              var ended = new Date();
+              console.log(today)
+              console.log(ended)
           }
 
           var myobj = document.getElementById("unity-canvas");

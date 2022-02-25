@@ -146,6 +146,11 @@
           }
           myVideo.src = src;
           document.getElementById("my-video").load();
+          document.getElementById('my-video').addEventListener('ended',myHandler,false);
+          function myHandler(e) {
+              // What you want to do after the event
+              console.log(e);
+          }
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();

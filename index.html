@@ -156,6 +156,17 @@
               var ended = new Date();
               console.log(today)
               console.log(ended)
+              var distance = ended - today;
+              console.log(distance)
+              var result = {
+                  bookId: params.book,
+                  userId: null,
+                  startedAt: today,
+                  duration: distance,
+                  pagesVisited: [],
+                  lastPageVisited: 0,
+              };
+              console.log(result)
           }
 
           var myobj = document.getElementById("unity-canvas");

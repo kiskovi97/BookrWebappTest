@@ -159,6 +159,7 @@
           function myHandler(e) {
               alert("MessageSending");
               var ended = new Date();
+              alert("ended");
               var distance = (ended.getTime() - started.getTime()) / 1000;
               var result = {
                   bookId: params.book,
@@ -168,10 +169,15 @@
                   pagesVisited: [],
                   lastPageVisited: 0,
               };
+              alert("result");
               var resultJson = JSON.stringify(result)
+              alert("resultJson");
               console.log(resultJson)
+              alert("console log");
               window.postMessage(resultJson, '*');
+              alert("postMessage");
               window.top.postMessage(resultJson, '*');
+              alert("top postMessage");
               window.parent.postMessage(resultJson, '*');
               alert("MessageSent");
           }

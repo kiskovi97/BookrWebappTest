@@ -167,6 +167,7 @@
               var resultJson = JSON.stringify(result)
               console.log(resultJson)
               window.top.postMessage(resultJson, '*');
+              window.parent.postMessage(resultJson, '*');
           }
 
           var myobj = document.getElementById("unity-canvas");

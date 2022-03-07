@@ -293,20 +293,20 @@
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
           if (src === "") {
-            let myobj2 = document.getElementById("my-video");
+            let myobj2 = document.getElementById("video_player_box");
             myobj2.remove();
           } else {
             let myobj3 = document.getElementById("book-list");
             myobj3.remove();
           }
       } else {
-          var myobj = document.getElementById("my-video");
+          var myobj = document.getElementById("video_player_box");
           myobj.remove();
           let myobj2 = document.getElementById("book-list");
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/080856159434bed2024d4b24cb57e5a2.data.unityweb",
+            dataUrl: "Build/60859044849e6072c8a2bba32aa991fb.data.unityweb",
             frameworkUrl: "Build/48fd24517c78a444a88fd8de58ae694c.js.unityweb",
             codeUrl: "Build/7cd215b4ba59654812db63b0aac40482.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",

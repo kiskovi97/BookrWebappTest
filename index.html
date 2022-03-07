@@ -15,7 +15,7 @@
           position: relative;
       }
 
-      canvas, iframe, video {
+      video_player_box, canvas, iframe, video, figure {
         margin: 0;
         position: absolute;
         top: 50%;
@@ -28,16 +28,83 @@
         max-width: 1120px; 
         max-height: 630px; 
       }
+	  
+	  #playpausebtn {
+		margin: 0;
+        position: absolute;
+		width: 100%;
+		height: 100%;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+	  }
+
+	  /*
+	  figcaption {
+		position: absolute;
+		bottom: -40px;
+		align-items: center;
+		background: #eaeaea;
+		width: 100%;
+		max-width: 1120px;
+		height: 40px;
+		padding: 0;
+		margin: 0;
+	  }
+	  
+	  #progress {
+		width: 82%;
+		max-width: 1120px;
+		height: 38px;
+		margin: 0;
+		padding: 0;
+	  }
+	  */
+	  #my-video, #videosrc {
+		max-width: 100vw;
+		padding: 0;
+		margin: 0;
+	  }
+
+	/*audio::-webkit-media-controls,
+	video::-webkit-media-controls {
+		display: none;
+	}
+	
+	audio::-webkit-media-controls-timeline,
+	video::-webkit-media-controls-timeline {
+		display: block;
+	}*/
 
     </style>
   </head>
   <body style="text-align: center">
     <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg') center / cover"></canvas>
-    <video id="my-video" controls playsinline>
+	<div id="video_player_box">
+		<figure>
+			<video id="my-video" playsinline autoplay onclick="playVideo()" poster="./bookr-class-logo-with-bg.jpg">
+				<source id="videosrc" src="https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4" type="video/mp4" />
+					To view this video please enable JavaScript, and consider upgrading to a
+					web browser that
+			</video>
+			<!-- CODE FOR CUSTOM PROGRESS BAR - Pls don't delete it, because customer asked for this, but then he changed his mind - Maybe it will be useful again in the future!
+			<!--figcaption>
+				<progress id="progress" max="100" value="0">Progress</progress>
+			</figcaption-->
+		</figure>
+		<!-- Custom Play Button - Don't delete it - Customer asked for this but then changed his mind -->
+		<!--div id="video_controls_bar" style="opacity: 0">
+			<!--img id="playpausebtn" onclick="playPause(this,'my-video')" src="white-play-icon-png-4.jpg"/-->
+			<!--img id="playpausebtn" onclick="playPause(this,'my-video')"/-->
+		<!--/div-->
+	</div>
+	<!-- Original video tag and content was: -->
+    <!--video id="my-video" controls >
       <source id="videosrc" src="https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4" type="video/mp4" />
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
-    </video>
+    </video-->
     <ul id="book-list">
       <li><h3><a href="?book=97">Gondri, the Black Dog</a></h3></li>
       <li><h3><a href="?book=406">Thanksgiving</a></h3></li>
@@ -84,26 +151,67 @@
       <li><h3><a href="?book=363">Class Play</a></h3></li>
       <li><h3><a href="?book=365">Don't Let Auntie Mabel Bless the Table</a></h3></li>
     </ul>
-    <script src="Build/46a333ce009b833d7fdbead6fd7c715c.js"></script>
+    <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
     <script>
       !function(a){var b=/iPhone/i,c=/iPod/i,d=/iPad/i,e=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,f=/Android/i,g=/(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,h=/(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,i=/IEMobile/i,j=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,k=/BlackBerry/i,l=/BB10/i,m=/Opera Mini/i,n=/(CriOS|Chrome)(?=.*\bMobile\b)/i,o=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,p=new RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),q=function(a,b){return a.test(b)},r=function(a){var r=a||navigator.userAgent,s=r.split("[FBAN");return"undefined"!=typeof s[1]&&(r=s[0]),s=r.split("Twitter"),"undefined"!=typeof s[1]&&(r=s[0]),this.apple={phone:q(b,r),ipod:q(c,r),tablet:!q(b,r)&&q(d,r),device:q(b,r)||q(c,r)||q(d,r)},this.amazon={phone:q(g,r),tablet:!q(g,r)&&q(h,r),device:q(g,r)||q(h,r)},this.android={phone:q(g,r)||q(e,r),tablet:!q(g,r)&&!q(e,r)&&(q(h,r)||q(f,r)),device:q(g,r)||q(h,r)||q(e,r)||q(f,r)},this.windows={phone:q(i,r),tablet:q(j,r),device:q(i,r)||q(j,r)},this.other={blackberry:q(k,r),blackberry10:q(l,r),opera:q(m,r),firefox:q(o,r),chrome:q(n,r),device:q(k,r)||q(l,r)||q(m,r)||q(o,r)||q(n,r)},this.seven_inch=q(p,r),this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch,this.phone=this.apple.phone||this.android.phone||this.windows.phone,this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet,"undefined"==typeof window?this:void 0},s=function(){var a=new r;return a.Class=r,a};"undefined"!=typeof module&&module.exports&&"undefined"==typeof window?module.exports=r:"undefined"!=typeof module&&module.exports&&"undefined"!=typeof window?module.exports=s():"function"==typeof define&&define.amd?define("isMobile",[],a.isMobile=s()):a.isMobile=s()}(this);
-
-      let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
+      
+	  function playVideo() {
+		document.getElementById("my-video").play();
+	  }
+	  
+	  function playPause(btn,vid){
+			var vid = document.getElementById(vid);
+			if(vid.paused){
+				vid.play();
+				/*btn.innerHTML = "Pause";				*/
+				btn.remove();
+			} /*else {
+				vid.pause();
+				btn.innerHTML = "Play";
+			}*/
+	  }
+	  
+	  let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
       if (isMobile.any || isIPad) {
           var myVideo = document.getElementById("videosrc");
           const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
           });
           var src = "";
+		  var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
           switch (params.book) {
-            case "97": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4"; break;
-            case "517": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID517bc_20220124165403.mp4"; break;
-            case "378": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID378_20211116124218.mp4"; break;
-            case "429": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID429bc_20211210143829.mp4"; break;
-            case "2": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID2_20211112100124.mp4"; break;
-            case "226": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID226_20211117100709.mp4"; break;
-            case "409": src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID409_20211116132454.mp4"; break;
-            case "406": src = "https://bookrlab.com/classapi/converter/convertedBook/converted/ID406_20211116131850.mp4"; break;
+            case "97":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
+				break;
+            case "517":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID517bc_20220124165403.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci84L0IvOEJkdnVjRllFaXFTbWFoWkZVclJBQUN4UUdsaURuVXNsdGRSeXhkQkl2LmpwZw==/original_4k.jpg";
+				break;
+            case "378":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID378_20211116124218.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9RL0cvUUcyN3U0Z1dQUUxYUmUzOXdVRzFwMk52cGRTSzA4N05xaWdUT0ZPUUxFLmpwZw==/original_4k.jpg";
+				break;
+            case "429":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID429bc_20211210143829.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci85L2ovOWpqcFFGWmw0azBOU0FzVEFQVDI1Q0pqQ2VXOVhySGJzZUtBSGdEWHlOLmpwZw==/original_4k.jpg";
+				break;
+            case "2":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID2_20211112100124.mp4";
+				posterImg= "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci91LzcvdTdUNTVua0t6SnF1T1Q0dWNRQ0xUQVpyOWg2Qm5lQ0xLdVpBajJTTGxzLmpwZw==/original_4k.jpg";
+				break;
+            case "226":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID226_20211117100709.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9SL24vUm5vTGV1ZUNKQVMwMFNyaHRvb3FOU0oyU3NXNWZ4anFhTnZ2NTZqY2lHLmpwZw==/original_4k.jpg";
+				break;
+            case "409":
+				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID409_20211116132454.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9hLzUvYTVyZjVGd2ZGVVN2TWpKbXd4UWFMUFY5SDZXN000N0twSEFxNmZscmh1LmpwZw==/original_4k.jpg";
+				break;
+            case "406":
+				src = "https://bookrlab.com/classapi/converter/convertedBook/converted/ID406_20211116131850.mp4";
+				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9rL0kva0k3dmRwUkNYZHJoZDZlanphTUplVlU2bmNoS29tbHMzbXZ6VHRUTktGLmpwZw==/original_4k.jpg";
+				break;
             
             case "18": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1IvdS9SdTBnc1hTMzdVbWhoQmZWa1puS0lZeENJQ3BBOHlHVXNCRFpPNlFwTmIubXA0/original.mp4"; break;
             case "84": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0MvYi9DYmwwaHFwWTczWE9pQVh4M1FsM01VSHRsczZKdzBEZVBrMnRGN2NMVW0ubXA0/original.mp4"; break;
@@ -149,6 +257,19 @@
           document.getElementById('my-video').addEventListener('ended',myEndHandler,false);
           document.getElementById('my-video').addEventListener('pause',myEndHandler,false);
           document.getElementById('my-video').addEventListener('play',myStartHandler,false);
+		  
+		  /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
+		  document.getElementById("my-video").addEventListener("timeupdate", function() {
+			   // if the video is loaded and duration is known
+			   if(!isNaN(this.duration)) {
+					var percent_complete = Math.round((this.currentTime / this.duration) * 100);
+					// use percent_complete to draw a progress bar
+					document.getElementById("progress").value = percent_complete;
+				}
+			});
+			*/
+		  
+		  document.getElementById("my-video").setAttribute("poster",posterImg);
           var started = new Date();
           function myStartHandler(e) {
             started = new Date();
@@ -156,9 +277,6 @@
           function myEndHandler(e) {
               var ended = new Date();
               var distance = (ended.getTime() - started.getTime()) / 1000;
-              const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-              });
               var result = {
                   bookId: params.book,
                   userId: null,
@@ -188,9 +306,9 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/4b15dfe54bb87c9a8d6bcb6291209fd0.unityweb",
-            frameworkUrl: "Build/f74780e70c023601f6d6d1f0386cc9b5.unityweb",
-            codeUrl: "Build/2f12776a2466ed78d3b610a83e8548a3.unityweb",
+            dataUrl: "Build/080856159434bed2024d4b24cb57e5a2.data.unityweb",
+            frameworkUrl: "Build/48fd24517c78a444a88fd8de58ae694c.js.unityweb",
+            codeUrl: "Build/7cd215b4ba59654812db63b0aac40482.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",

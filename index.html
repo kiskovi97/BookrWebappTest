@@ -152,105 +152,39 @@
       <li><h3><a href="?book=365">Don't Let Auntie Mabel Bless the Table</a></h3></li>
     </ul>
     <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
+    <script src="./booklist.js"></script>
     <script>
       !function(a){var b=/iPhone/i,c=/iPod/i,d=/iPad/i,e=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,f=/Android/i,g=/(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,h=/(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,i=/IEMobile/i,j=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,k=/BlackBerry/i,l=/BB10/i,m=/Opera Mini/i,n=/(CriOS|Chrome)(?=.*\bMobile\b)/i,o=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,p=new RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),q=function(a,b){return a.test(b)},r=function(a){var r=a||navigator.userAgent,s=r.split("[FBAN");return"undefined"!=typeof s[1]&&(r=s[0]),s=r.split("Twitter"),"undefined"!=typeof s[1]&&(r=s[0]),this.apple={phone:q(b,r),ipod:q(c,r),tablet:!q(b,r)&&q(d,r),device:q(b,r)||q(c,r)||q(d,r)},this.amazon={phone:q(g,r),tablet:!q(g,r)&&q(h,r),device:q(g,r)||q(h,r)},this.android={phone:q(g,r)||q(e,r),tablet:!q(g,r)&&!q(e,r)&&(q(h,r)||q(f,r)),device:q(g,r)||q(h,r)||q(e,r)||q(f,r)},this.windows={phone:q(i,r),tablet:q(j,r),device:q(i,r)||q(j,r)},this.other={blackberry:q(k,r),blackberry10:q(l,r),opera:q(m,r),firefox:q(o,r),chrome:q(n,r),device:q(k,r)||q(l,r)||q(m,r)||q(o,r)||q(n,r)},this.seven_inch=q(p,r),this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch,this.phone=this.apple.phone||this.android.phone||this.windows.phone,this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet,"undefined"==typeof window?this:void 0},s=function(){var a=new r;return a.Class=r,a};"undefined"!=typeof module&&module.exports&&"undefined"==typeof window?module.exports=r:"undefined"!=typeof module&&module.exports&&"undefined"!=typeof window?module.exports=s():"function"==typeof define&&define.amd?define("isMobile",[],a.isMobile=s()):a.isMobile=s()}(this);
       
-	  function playVideo() {
-		document.getElementById("my-video").play();
-	  }
-	  
-	  function playPause(btn,vid){
-			var vid = document.getElementById(vid);
-			if(vid.paused){
-				vid.play();
-				/*btn.innerHTML = "Pause";				*/
-				btn.remove();
-			} /*else {
-				vid.pause();
-				btn.innerHTML = "Play";
-			}*/
-	  }
-	  
-	  let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
+      function playVideo() {
+      document.getElementById("my-video").play();
+      }
+      
+      function playPause(btn,vid){
+        var vid = document.getElementById(vid);
+        if(vid.paused){
+          vid.play();
+          /*btn.innerHTML = "Pause";				*/
+          btn.remove();
+        } /*else {
+          vid.pause();
+          btn.innerHTML = "Play";
+        }*/
+      }
+      
+      let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
       if (isMobile.any || isIPad) {
           var myVideo = document.getElementById("videosrc");
           const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
           });
           var src = "";
-		  var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
-          switch (params.book) {
-            case "97":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID97_20211112130024.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
-				break;
-            case "517":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID517bc_20220124165403.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci84L0IvOEJkdnVjRllFaXFTbWFoWkZVclJBQUN4UUdsaURuVXNsdGRSeXhkQkl2LmpwZw==/original_4k.jpg";
-				break;
-            case "378":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID378_20211116124218.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9RL0cvUUcyN3U0Z1dQUUxYUmUzOXdVRzFwMk52cGRTSzA4N05xaWdUT0ZPUUxFLmpwZw==/original_4k.jpg";
-				break;
-            case "429":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID429bc_20211210143829.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci85L2ovOWpqcFFGWmw0azBOU0FzVEFQVDI1Q0pqQ2VXOVhySGJzZUtBSGdEWHlOLmpwZw==/original_4k.jpg";
-				break;
-            case "2":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID2_20211112100124.mp4";
-				posterImg= "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci91LzcvdTdUNTVua0t6SnF1T1Q0dWNRQ0xUQVpyOWg2Qm5lQ0xLdVpBajJTTGxzLmpwZw==/original_4k.jpg";
-				break;
-            case "226":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID226_20211117100709.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9SL24vUm5vTGV1ZUNKQVMwMFNyaHRvb3FOU0oyU3NXNWZ4anFhTnZ2NTZqY2lHLmpwZw==/original_4k.jpg";
-				break;
-            case "409":
-				src = "https://bkrapi-win.v2.bookrclass.com/convertedBooks/ID409_20211116132454.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9hLzUvYTVyZjVGd2ZGVVN2TWpKbXd4UWFMUFY5SDZXN000N0twSEFxNmZscmh1LmpwZw==/original_4k.jpg";
-				break;
-            case "406":
-				src = "https://bookrlab.com/classapi/converter/convertedBook/converted/ID406_20211116131850.mp4";
-				posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci9rL0kva0k3dmRwUkNYZHJoZDZlanphTUplVlU2bmNoS29tbHMzbXZ6VHRUTktGLmpwZw==/original_4k.jpg";
-				break;
-            
-            case "18": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1IvdS9SdTBnc1hTMzdVbWhoQmZWa1puS0lZeENJQ3BBOHlHVXNCRFpPNlFwTmIubXA0/original.mp4"; break;
-            case "84": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0MvYi9DYmwwaHFwWTczWE9pQVh4M1FsM01VSHRsczZKdzBEZVBrMnRGN2NMVW0ubXA0/original.mp4"; break;
-            case "484": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3kvSi95SlQ4VU5OYXZJVlBIYjBxakkzNE01SXY0VGJmakMxbVBNOWpaZVA1ZXoubXA0/original.mp4"; break;
-            case "15": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3LzQvSy80S1cxUHdhT0pRRkJXOHZnbkFXWm9UaG9CNklndnppeVVQV0tzMXRqeVAubXA0/original.mp4"; break;
-            case "371": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3IvZC9yZHZ1cTNuMGtKazJqVFFTWW4zM0MxOTZvZDlnRG1TNUZBUzJZaWE1VDkubXA0/original.mp4"; break;
-            case "99": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3kvMC95MGd1djF0WklMTzdXMlNSTlhORnA1RTd4R0JuWmw4M0I0dHdmdUFCTG4ubXA0/original.mp4"; break;
-            case "413": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1UvTi9VTktyNXdqSFhwNFVEUU1lWmdkNHZUZktmbTZmS3FjSXJoUGtXNUZHTFMubXA0/original.mp4"; break;
-            case "374": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3LzMvYy8zY2E0cVlWTGlyVGFYYktkSVhFaE4yd1d3S2JXZ1F2YXJKeVBCUFZYcTQubXA0/original.mp4"; break;
-
-            
-            case "135": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3ovWS96WXB5UGh4MEJrQ0F2SHJqVzV6dFEzOGczb1V2dkZNcGlnT0pibVZZcEsubXA0/original.mp4"; break;
-            case "83": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L2UvZS9lZUlxSHpvajBpSHhXQ1hCbkQ0djNJRmd0dEI1bTlGUnFwMlRubm53QTAubXA0/original.mp4"; break;
-            case "423": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0YvbC9GbDl5VmFoNUlZQ2tWSmlPS0pvelM5cHR0RkRteWt5MG83UlBuWU56VVYubXA0/original.mp4"; break;
-            case "361": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L2MvZi9jZllFRm5OdXdqTWF0WXpPbVdrVldtR2xKdEx3YzdGNTNvdW41Y0FqdlQubXA0/original.mp4"; break;
-            case "125": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3MvRS9zRTlsTk90T1JlZlZaMjVOSkt1dEdqZU9qRVV0b2pJWjRyTGU4YUFHN1cubXA0/original.mp4"; break;
-            case "229": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1IvaS9SaW5VRVF5dlc3eU02U3VCeVFxQ0hMYnRUQXNtQVE5UE55eWx3ZldhS2cubXA0/original.mp4"; break;
-            case "367": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3IvTC9yTGtGYUpLNUM1bk9mQ1pnYTVJUTdjT2F3Qms3emt5ejV2SlMwRGVNcGUubXA0/original.mp4"; break;
-            case "23": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3ovNS96NTBTSXlid1lTWWxyUHVjOVNhNnlXeGNXS3FCak1XdWZwMElha3UzRlYubXA0/original.mp4"; break;
-
-            
-            case "263": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3gvTi94TjE4ZXVzYU5Xc09LV0FRamtwQnd0UWNZamIzRkphMDkxaXJiblhFb0subXA0/original.mp4"; break;
-            case "102": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0wvby9Mb1dyUFZia29Zc3FQMnJjYzNzazQ3aFpVSHZRcWp0Y3Fya3R2eEZoRXEubXA0/original.mp4"; break;
-            case "525": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L2UvMy9lM1NoTWtVZHNqdnZ5Y213eUhPQ01QODk2ZlBLRGRKUWZldGFuUjFwRkEubXA0/original.mp4"; break;
-            case "127": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L24vMS9uMXNQT09DcGZlWTFQTHQ1dkZNdGVnUHFZZm85REZOY2llbjRoSFBiOWIubXA0/original.mp4"; break;
-            case "385": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L08vTi9PTmFPTkRjYmg2S1lheko0eTVRWFNzQXNEOWRockVKQmF5VFZVenppWlAubXA0/original.mp4"; break;
-            case "366": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1AvRi9QRk1yN0tIWGFiVmhQSGNhZTZRVm5aTE9KdTJnQ1JTRG13a1dNN2RjRHYubXA0/original.mp4"; break;
-            case "73": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L1MvWC9TWE9Sa1o0eDQyTDNrVE9KUjdBcXg4NzFIelZCWGJJNUtRNnNHbGRhVXYubXA0/original.mp4"; break;
-            case "213": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L2YvMy9mMzQ5bUczUTd3WHZyRTNhRlRSdU9EbFQ3bUZHNWVHaWtUSVBsUXpHc0YubXA0/original.mp4"; break;
-
-            
-            case "91": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0YvYi9GYkdrUzRNeVVHUXdWRklOUVFuamZtVTJpRmpTc3RrT1ZwR2xla09UOG0ubXA0/original.mp4"; break;
-            case "180": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L0ovWi9KWko0Sm95aGVPaDRzSFA2VU9hcjZQQzdwU1ByamtreThOdjhnZ3B5Nm4ubXA0/original.mp4"; break;
-            case "13": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3YvYi92YkxEWTNnNzlwekRrRERWRUlVeHJwRkN0Y2N5N2ZLZEtlTTlaWEpaWUEubXA0/original.mp4"; break;
-            case "375": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3MvOC9zOG5sd29FMFFlUzM2ekVWblptdnRwbGdYNkpUYkZvdm5ubklKRXkyRjQubXA0/original.mp4"; break;
-            case "381": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L2kvbS9pbXYwSzIxUkR4VUdVcjJ0UnJkUnMyTUZrM0JFaW9TZmxkcTlKYlB3dTgubXA0/original.mp4"; break;
-            case "373": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3LzAvQy8wQ1EzcXBHVWNlQkg5c01oaTdGRDhzamFYM3FGYTlvZ21DVlZiNWhmRzIubXA0/original.mp4"; break;
-            case "363": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3LzQvNC80NFJSMTdUOUNiOW5SMllheUJJbFdUU3NQd1hsV3hrMGV0Q2Fyc1E3Rm4ubXA0/original.mp4"; break;
-            case "365": src = "https://api.v2.bookrclass.com/api/media/Ym9vay1wcmV2aWV3L3AvOS9wOUxGelJTbHlOYk9zOGNhblNmdzZDbXNWYlNnOTh5RUY2RnFWQkRKcWgubXA0/original.mp4"; break;
+          var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
+          for (book in bookList) {
+            if (book.id == params.book) {
+              src = book.src;
+              posterImg = book.posterImg;
+            }
           }
           myVideo.src = src;
           document.getElementById("my-video").load();
@@ -277,6 +211,9 @@
           function myEndHandler(e) {
               var ended = new Date();
               var distance = (ended.getTime() - started.getTime()) / 1000;
+              const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+              });
               var result = {
                   bookId: params.book,
                   userId: null,
@@ -306,9 +243,9 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/60859044849e6072c8a2bba32aa991fb.data.unityweb",
-            frameworkUrl: "Build/48fd24517c78a444a88fd8de58ae694c.js.unityweb",
-            codeUrl: "Build/7cd215b4ba59654812db63b0aac40482.wasm.unityweb",
+            dataUrl: "Build/9ed798dd2e30aa9ecc0d4ac56dbe59fd.data.unityweb",
+            frameworkUrl: "Build/437920acffb9acf11d6816baa03ad63f.js.unityweb",
+            codeUrl: "Build/de7d6755810b5830b63f2a7f58af8397.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",

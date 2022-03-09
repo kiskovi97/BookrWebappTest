@@ -105,52 +105,7 @@
         To view this video please enable JavaScript, and consider upgrading to a
         web browser that
     </video-->
-    <ul id="book-list">
-      <li><h3><a href="?book=97">Gondri, the Black Dog</a></h3></li>
-      <li><h3><a href="?book=406">Thanksgiving</a></h3></li>
-      <li><h3><a href="?book=517">Follow Me</a></h3></li>
-      <li><h3><a href="?book=378">Monster Hunt</a></h3></li>
-      <li><h3><a href="?book=429">Going to Boston</a></h3></li>
-      <li><h3><a href="?book=2">A Day At The Beach</a></h3></li>
-      <li><h3><a href="?book=226">The Magic Machine</a></h3></li>
-      <li><h3><a href="?book=409">Grumpy Pants</a></h3></li>
-      
-      <li><h3><a href="?book=18">Emma's Family</a></h3></li>
-      <li><h3><a href="?book=84">Getting Ready</a></h3></li>
-      <li><h3><a href="?book=484">Theo's Mood</a></h3></li>
-      <li><h3><a href="?book=15">At the Market</a></h3></li>
-      <li><h3><a href="?book=371">Let's Ride Scooters!</a></h3></li>
-      <li><h3><a href="?book=99">Hamster Hunt</a></h3></li>
-      <li><h3><a href="?book=413">When I Feel Good About Myself</a></h3></li>
-      <li><h3><a href="?book=374">Traffic Jam</a></h3></li>
-      
-      <li><h3><a href="?book=135">Let's Go Outside!</a></h3></li>
-      <li><h3><a href="?book=83">Funny Fruits</a></h3></li>
-      <li><h3><a href="?book=423">Belly Breathe</a></h3></li>
-      <li><h3><a href="?book=361">Are you ready for the lesson?</a></h3></li>
-      <li><h3><a href="?book=125">I want a tablet, please!</a></h3></li>
-      <li><h3><a href="?book=229">The Lost Dog</a></h3></li>
-      <li><h3><a href="?book=367">Going to Washington</a></h3></li>
-      <li><h3><a href="?book=23">Guess Who!</a></h3></li>
-      
-      <li><h3><a href="?book=263">Sam the Polar Bear</a></h3></li>
-      <li><h3><a href="?book=102">Hello, Teddy!</a></h3></li>
-      <li><h3><a href="?book=525">Girls Can Do Anything</a></h3></li>
-      <li><h3><a href="?book=127">In the Garden</a></h3></li>
-      <li><h3><a href="?book=385">The Prince's Tooth Is Loose</a></h3></li>
-      <li><h3><a href="?book=366">Father's Day</a></h3></li>
-      <li><h3><a href="?book=73">Bring Your Pet to School</a></h3></li>
-      <li><h3><a href="?book=213">The Tortoise and the Hare</a></h3></li>
-      
-      <li><h3><a href="?book=91">Wiggling Veggies</a></h3></li>
-      <li><h3><a href="?book=180">What's This?</a></h3></li>
-      <li><h3><a href="?book=13">Amy and Tom</a></h3></li>
-      <li><h3><a href="?book=375">Who Are They?</a></h3></li>
-      <li><h3><a href="?book=381">Say Cheese!</a></h3></li>
-      <li><h3><a href="?book=373">Saving the Unicorn</a></h3></li>
-      <li><h3><a href="?book=363">Class Play</a></h3></li>
-      <li><h3><a href="?book=365">Don't Let Auntie Mabel Bless the Table</a></h3></li>
-    </ul>
+    <ul id="book-list"></ul>
     <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
     <script src="./booklist.js"></script>
     <script>
@@ -180,8 +135,14 @@
           });
           var src = "";
           var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
+          var documentBookList = document.getElementById("book-list");
           for (var id in bookList) {
             var book = bookList[id];
+
+            const li = document.createElement('li');
+            li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.name+`</a></h3>`;
+            document.getElementById('content').appendChild(li);
+
             if (book.id == params.book) {
               src = book.src;
               posterImg = book.posterImg;

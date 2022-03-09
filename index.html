@@ -181,7 +181,7 @@
           var src = "";
           var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
           console.log(bookList);
-          for (book in bookList) {
+          for (var book in bookList) {
             console.log(book.id);
             if (book.id == params.book) {
               src = book.src;

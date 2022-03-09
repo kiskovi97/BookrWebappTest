@@ -180,10 +180,8 @@
           });
           var src = "";
           var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
-          console.log(bookList);
           for (var id in bookList) {
             var book = bookList[id];
-            console.log(book);
             if (book.id == params.book) {
               src = book.src;
               posterImg = book.posterImg;
@@ -246,7 +244,7 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/9ed798dd2e30aa9ecc0d4ac56dbe59fd.data.unityweb",
+            dataUrl: "Build/24dfb5ad7b23d8291d0e27f3a0a58aeb.data.unityweb",
             frameworkUrl: "Build/437920acffb9acf11d6816baa03ad63f.js.unityweb",
             codeUrl: "Build/de7d6755810b5830b63f2a7f58af8397.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",

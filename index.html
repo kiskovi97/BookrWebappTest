@@ -156,7 +156,7 @@
               }
             }
             var myVideoSrc = document.getElementById("videosrc");
-            myVideoSrc.src = src;
+            if (myVideoSrc) myVideoSrc.src = src;
             var myVideo = document.getElementById("my-video");
             if (myVideo) {
               myVideo.load();

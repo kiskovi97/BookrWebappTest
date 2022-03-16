@@ -148,7 +148,7 @@
 
               const li = document.createElement('li');
               li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.name+`</a></h3>`;
-              documentBookList.appendChild(li);
+              if (documentBookList) documentBookList.appendChild(li);
 
               if (book.id == params.book) {
                 src = book.src;

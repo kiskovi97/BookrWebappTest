@@ -157,11 +157,15 @@
               }
             }
             myVideo.src = src;
-            document.getElementById("my-video").load();
-            document.getElementById('my-video').addEventListener('ended',myEndHandler,false);
-            document.getElementById('my-video').addEventListener('pause',myEndHandler,false);
-            document.getElementById('my-video').addEventListener('play',myStartHandler,false);
-            document.getElementById("my-video").setAttribute("poster",posterImg);
+            var myVideo = document.getElementById("my-video");
+            if (myVideo) {
+              myVideo.load();
+              myVideo.addEventListener('ended',myEndHandler,false);
+              myVideo.addEventListener('pause',myEndHandler,false);
+              myVideo.addEventListener('play',myStartHandler,false);
+              myVideo.setAttribute("poster",posterImg);
+            }
+            
           });
 		  /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
 		  document.getElementById("my-video").addEventListener("timeupdate", function() {

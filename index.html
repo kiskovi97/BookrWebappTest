@@ -162,6 +162,14 @@
             document.getElementById('my-video').addEventListener('pause',myEndHandler,false);
             document.getElementById('my-video').addEventListener('play',myStartHandler,false);
             document.getElementById("my-video").setAttribute("poster",posterImg);
+            
+            if (src === "") {
+              let myobj2 = document.getElementById("video_player_box");
+              myobj2.remove();
+            } else {
+              let myobj3 = document.getElementById("book-list");
+              myobj3.remove();
+            }
           });
 		  /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
 		  document.getElementById("my-video").addEventListener("timeupdate", function() {
@@ -198,13 +206,6 @@
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
-          if (src === "") {
-            let myobj2 = document.getElementById("video_player_box");
-            myobj2.remove();
-          } else {
-            let myobj3 = document.getElementById("book-list");
-            myobj3.remove();
-          }
       } else {
           var myobj = document.getElementById("video_player_box");
           myobj.remove();

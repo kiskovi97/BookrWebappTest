@@ -202,6 +202,10 @@
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
+          
+          const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+              });
           if (params.book){
             let myobj3 = document.getElementById("book-list");
             myobj3.remove();
@@ -216,7 +220,7 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/806290865f2a84d4f0d28aaf7cceb50e.data.unityweb",
+            dataUrl: "Build/361227db5a3261f44705891dbf992656.data.unityweb",
             frameworkUrl: "Build/db7e13bcc912a8df68266b7b4cba1e54.js.unityweb",
             codeUrl: "Build/d89f91f59e423665f8a0f920e5d80c30.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",

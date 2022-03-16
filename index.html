@@ -78,7 +78,6 @@
 	}*/
 
     </style>
-    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
   </head>
   <body style="text-align: center">
     <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg') center / cover"></canvas>
@@ -129,16 +128,16 @@
       }
       
       let isIPad = navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform);
-      if (isMobile.any || isIPad) {
-          const params = new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop),
-          });
+      if (isMobile.any || isIPad) {         
 
           fetch("./StreamingAssets/books/booklist.json")
           .then(response => {
             return response.json();
           })
           .then(jsonData =>  {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+              });
             var src = "";
             var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
             var documentBookList = document.getElementById("book-list");
@@ -167,6 +166,7 @@
             }
             
           });
+		  
 		  /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
 		  document.getElementById("my-video").addEventListener("timeupdate", function() {
 			   // if the video is loaded and duration is known
@@ -177,6 +177,7 @@
 				}
 			});
 			*/
+		  
           var started = new Date();
           function myStartHandler(e) {
             started = new Date();
@@ -202,7 +203,6 @@
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
-
           if (params.book){
             let myobj3 = document.getElementById("book-list");
             myobj3.remove();
@@ -217,7 +217,7 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/ee6a739e574e0480142ba25b428409f1.data.unityweb",
+            dataUrl: "Build/82064196664d4084d6115c4dfe4f5f4b.data.unityweb",
             frameworkUrl: "Build/48fd24517c78a444a88fd8de58ae694c.js.unityweb",
             codeUrl: "Build/9f6d1b797eacfbe9ee2a44bf4281ad38.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",

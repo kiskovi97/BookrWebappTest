@@ -9,7 +9,7 @@ var src = "";
 var started = new Date();
 
 function myStartHandler(e) {
-    Loading(false);
+    console.log("play event was called");
     started = new Date();
     if (!isCurrentBookFree) {
         console.log("Book is not free!");
@@ -110,11 +110,13 @@ function BookDataRecived(jsonData)
     var myVideoSrc = document.getElementById("videosrc");
     if (myVideoSrc) myVideoSrc.src = src;
     if (myVideoHtml) {
+        console.log("myVideoHtml is loading");
         myVideoHtml.load();
         myVideoHtml.addEventListener('ended',myEndHandler,false);
         myVideoHtml.addEventListener('pause',myEndHandler,false);
         myVideoHtml.addEventListener('play',myStartHandler,false);
         myVideoHtml.setAttribute("poster",posterImg);
+        console.log("myVideoHtml is loaded");
     }
     
     if (params.book){

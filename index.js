@@ -94,7 +94,13 @@ function BookDataRecived(jsonData)
         if (bookListHtmlItem) bookListHtmlItem.appendChild(li);
 
         if (book.id == params.book) {
-            src = book.previewUrls.original;
+            if (book.previewUrls)
+            {
+                src = book.previewUrls.original;
+            } else {
+                alert("This video is unavailable on mobile");
+            }
+            
             posterImg = book.coverUrls.optimal;
             isCurrentBookFree = book.isFree;
             console.log("isCurrentBookFree : " + isCurrentBookFree);

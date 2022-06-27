@@ -95,7 +95,7 @@ function BookDataRecived(jsonData)
         myVideoHtml.addEventListener('ended',myEndHandler);
         myVideoHtml.addEventListener('pause',myEndHandler);
         myVideoHtml.addEventListener('play',myStartHandler);
-        myVideoHtml.addEventListener("click", function(event) { 
+        /*myVideoHtml.addEventListener("click", function(event) { 
             console.log("isPlaying" + myVideoHtml.paused );
             console.log("onClick");
             if (myVideoHtml.paused == true) {
@@ -104,7 +104,7 @@ function BookDataRecived(jsonData)
             else {
                 myVideoHtml.pause();
             }
-        });
+        });*/
         myVideoHtml.setAttribute("poster",posterImg);
         myVideoHtml.load();
         console.log("myVideoHtml is loaded");

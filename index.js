@@ -15,8 +15,8 @@ function myStartHandler(e) {
         console.log("Book is not free!");
         myVideoHtml.pause();
         alert("This book is not free!");
-        var href = window.location.href;
-        window.location.href = href.split('?')[0];
+        /*var href = window.location.href;
+        window.location.href = href.split('?')[0];*/
     }
 }
 function myEndHandler(e) {
@@ -139,11 +139,17 @@ function LoadMobile()
                 })
             }).then(response => {
                 BookDataRecived(jsonData, true);
-            })
+            }).catch((error) => {
+                console.error('Error:', error);
+                BookDataRecived(jsonData, false);
+            });
         } else {
             BookDataRecived(jsonData, false);
         }
-    });
+    }).catch((error) => {
+        console.error('Error:', error);
+        BookDataRecived(jsonData, false);
+    });;
 
     bookListHtmlItem.hidden = true;
     videoPlayerBoyHtml.hidden = true;

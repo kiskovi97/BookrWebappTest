@@ -132,143 +132,13 @@
     <ul id="book-list"></ul>
     <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
     <script src="baseFunctions.js"></script>
+    <script src="index.js"></script>
     <script>
-	  var isCurrentBookFree = true;
-	  var src = "";
-	  var spinnerLoader = document.getElementById("theSpinnerLoader");
-	  
-      function playVideo() {		
-        if (src && src != "") {
-          spinnerLoader.style.display = "none";
-          console.log("in playVideo() function isCurrentBookFree : " + isCurrentBookFree);
-          if (isCurrentBookFree) {
-            document.getElementById("my-video").play();
-          } else {
-            alert("This book is not free!");
-            console.log("This book is not free!");
-          }				
-        } else {
-          console.log("src is still null");
-          spinnerLoader.style.display = "block";
-        }
-      }
-      
-      function playPause(btn,vid){
-        var vid = document.getElementById(vid);
-        if(vid.paused){
-          vid.play();
-          /*btn.innerHTML = "Pause";				*/
-          btn.remove();
-        } /*else {
-          vid.pause();
-          btn.innerHTML = "Play";
-        }*/
-      }
       if (isVideoPlayerNeeded()) {         
-	  
-	  	  var spinnerLoaderForMenu = document.getElementById("theSpinnerLoaderForMenu");
-
-		  // Turn on the menu booksList waiting spinner
-		  spinnerLoaderForMenu.style.display = "block";
-
-          //fetch("./StreamingAssets/books/booklist.json")
-          //fetch("https://bookrlab.com/webvideo/booksList.php")
-          fetch("https://api.v2.bookrclass.com/api/mobile/books")
-          .then(response => {
-            return response.json();
-          })
-          .then(jsonData =>  {		  
-		    // Turn off the menu booksList waiting spinner
-			spinnerLoaderForMenu.style.display = "none";
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-              });
-            //var src = "";
-            var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
-            var documentBookList = document.getElementById("book-list");
-
-            for (var id in jsonData.result.list) {
-              var book = jsonData.result.list[id];
-
-              const li = document.createElement('li');
-              li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.title+`</a></h3>`;
-              if (documentBookList) documentBookList.appendChild(li);
-
-              if (book.id == params.book) {
-                src = book.previewUrls.original;
-                posterImg = book.coverUrls.optimal;
-				isCurrentBookFree = book.isFree;
-				console.log("isCurrentBookFree : " + isCurrentBookFree);
-              }
-            }
-            var myVideoSrc = document.getElementById("videosrc");
-            if (myVideoSrc) myVideoSrc.src = src;
-            var myVideo = document.getElementById("my-video");
-            if (myVideo) {
-              myVideo.load();
-              myVideo.addEventListener('ended',myEndHandler,false);
-              myVideo.addEventListener('pause',myEndHandler,false);
-              myVideo.addEventListener('play',myStartHandler,false);
-              myVideo.setAttribute("poster",posterImg);
-            }
-            
-          });
-		  
-		  /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
-		  document.getElementById("my-video").addEventListener("timeupdate", function() {
-			   // if the video is loaded and duration is known
-			   if(!isNaN(this.duration)) {
-					var percent_complete = Math.round((this.currentTime / this.duration) * 100);
-					// use percent_complete to draw a progress bar
-					document.getElementById("progress").value = percent_complete;
-				}
-			});
-			*/
-		  
-          var started = new Date();
-          function myStartHandler(e) {
-			spinnerLoader.style.display = "none";
-            started = new Date();
-			if (!isCurrentBookFree) {
-				console.log("Book is not free!");
-				document.getElementById("my-video").pause();
-				alert("This book is not free!");
-			}
-          }
-          function myEndHandler(e) {
-              var ended = new Date();
-              var distance = (ended.getTime() - started.getTime()) / 1000;
-              const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-              });
-              var result = {
-                  bookId: params.book,
-                  userId: null,
-                  startedAt: started,
-                  duration: distance,
-                  pagesVisited: [],
-                  lastPageVisited: 0,
-              };
-              var resultJson = JSON.stringify(result)
-              console.log(resultJson)
-              window.top.postMessage(resultJson, '*');
-          }
+          LoadMobile();
 
           var myobj = document.getElementById("unity-canvas");
           myobj.remove();
-          
-          const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-              });
-          if (params.book){
-            let myobj3 = document.getElementById("book-list");
-            myobj3.remove();
-			// Turn off the menu booksList waiting spinner
-			spinnerLoaderForMenu.style.display = "none";
-          } else {
-            let myobj2 = document.getElementById("video_player_box");
-            myobj2.remove();
-          }
       } else {
           var myobj = document.getElementById("video_player_box");
           myobj.remove();
@@ -276,7 +146,7 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/2abf7fd5b95ffd5e0a35a744d2d8d456.data.unityweb",
+            dataUrl: "Build/259c5c8c2892404510a04a8e06000d52.data.unityweb",
             frameworkUrl: "Build/12d5cf67a2773fb95fe35d1a41fea946.js.unityweb",
             codeUrl: "Build/bee2c57707c12cfb01857a2dbd4f5222.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",

@@ -92,9 +92,9 @@ function BookDataRecived(jsonData)
     if (myVideoSrc) myVideoSrc.src = src;
     if (myVideoHtml) {
         console.log("myVideoHtml is loading");
-        myVideoHtml.addEventListener('ended',myEndHandler,false);
-        myVideoHtml.addEventListener('pause',myEndHandler,false);
-        myVideoHtml.addEventListener('play',myStartHandler,false);
+        myVideoHtml.addEventListener('ended',myEndHandler);
+        myVideoHtml.addEventListener('pause',myEndHandler);
+        myVideoHtml.addEventListener('play',myStartHandler);
         myVideoHtml.load();
         console.log("myVideoHtml is loaded");
     }

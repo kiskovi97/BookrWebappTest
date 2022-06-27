@@ -95,7 +95,6 @@ function BookDataRecived(jsonData)
         myVideoHtml.addEventListener('ended',myEndHandler,false);
         myVideoHtml.addEventListener('pause',myEndHandler,false);
         myVideoHtml.addEventListener('play',myStartHandler,false);
-        myVideoHtml.setAttribute("poster",posterImg);
         myVideoHtml.load();
         console.log("myVideoHtml is loaded");
     }

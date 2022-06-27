@@ -105,7 +105,7 @@ function BookDataRecived(jsonData)
                 myVideoHtml.pause();
             }
         });
-        myVideo.setAttribute("poster",posterImg);
+        myVideoHtml.setAttribute("poster",posterImg);
         myVideoHtml.load();
         console.log("myVideoHtml is loaded");
     }

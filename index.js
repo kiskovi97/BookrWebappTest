@@ -10,6 +10,8 @@ var started = new Date();
 var isPlaying = false;
 
 function onClick() {
+    console.log("isPlaying" + isPlaying);
+    console.log("onClick");
     if (isPlaying)
     {
         myVideoHtml.pause();

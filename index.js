@@ -47,34 +47,6 @@ function Loading(isLoading)
     spinnerLoader.style.display = isLoading ?  "block" : "none";
     return 
 }
-    
-function playVideo() {		
-  if (src && src != "") {
-    Loading(false);
-    console.log("in playVideo() function isCurrentBookFree : " + isCurrentBookFree);
-    if (isCurrentBookFree) {
-        myVideoHtml.play();
-    } else {
-      alert("This book is not free!");
-      console.log("This book is not free!");
-    }				
-  } else {
-    console.log("src is still null");
-    Loading(true);
-  }
-}
-
-function playPause(btn,vid){
-  var vid = document.getElementById(vid);
-  if(vid.paused){
-    vid.play();
-    /*btn.innerHTML = "Pause";				*/
-    btn.remove();
-  } /*else {
-    vid.pause();
-    btn.innerHTML = "Play";
-  }*/
-}
 
 function BookDataRecived(jsonData)
 {
@@ -107,17 +79,6 @@ function BookDataRecived(jsonData)
             console.log("isCurrentBookFree : " + isCurrentBookFree);
         }
     }
-    var myVideoSrc = document.getElementById("videosrc");
-    if (myVideoSrc) myVideoSrc.src = src;
-    if (myVideoHtml) {
-        console.log("myVideoHtml is loading");
-        myVideoHtml.load();
-        myVideoHtml.addEventListener('ended',myEndHandler,false);
-        myVideoHtml.addEventListener('pause',myEndHandler,false);
-        myVideoHtml.addEventListener('play',myStartHandler,false);
-        myVideoHtml.setAttribute("poster",posterImg);
-        console.log("myVideoHtml is loaded");
-    }
     
     if (params.book){
         videoPlayerBoyHtml.hidden = false;
@@ -125,6 +86,18 @@ function BookDataRecived(jsonData)
     } else {
         bookListHtmlItem.hidden = false;
         videoPlayerBoyHtml.remove();
+    }
+
+    var myVideoSrc = document.getElementById("videosrc");
+    if (myVideoSrc) myVideoSrc.src = src;
+    if (myVideoHtml) {
+        console.log("myVideoHtml is loading");
+        myVideoHtml.addEventListener('ended',myEndHandler,false);
+        myVideoHtml.addEventListener('pause',myEndHandler,false);
+        myVideoHtml.addEventListener('play',myStartHandler,false);
+        myVideoHtml.setAttribute("poster",posterImg);
+        myVideoHtml.load();
+        console.log("myVideoHtml is loaded");
     }
 }
 

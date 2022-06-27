@@ -7,32 +7,17 @@ var myVideoHtml = document.getElementById("my-video");
 var isCurrentBookFree = true;
 var src = "";
 var started = new Date();
-var isPlaying = false;
-
-function onClick() {
-    console.log("isPlaying" + isPlaying);
-    console.log("onClick");
-    if (isPlaying)
-    {
-        myVideoHtml.pause();
-    } else {
-        myVideoHtml.play();
-    }
-}
 
 function myStartHandler(e) {
-    isPlaying = true;
     console.log("play event was called");
     started = new Date();
     if (!isCurrentBookFree) {
         console.log("Book is not free!");
         myVideoHtml.pause();
-        isPlaying = false;
         alert("This book is not free!");
     }
 }
 function myEndHandler(e) {
-    isPlaying = false;
     var ended = new Date();
     var distance = (ended.getTime() - started.getTime()) / 1000;
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -110,6 +95,17 @@ function BookDataRecived(jsonData)
         myVideoHtml.addEventListener('ended',myEndHandler);
         myVideoHtml.addEventListener('pause',myEndHandler);
         myVideoHtml.addEventListener('play',myStartHandler);
+        myVideoHtml.addEventListener("click", function(event) { 
+            console.log("isPlaying" + myVideoHtml.paused );
+            console.log("onClick");
+            if (myVideoHtml.paused == true) {
+                myVideoHtml.play();
+            }
+            else {
+                myVideoHtml.pause();
+            }
+        });
+        myVideo.setAttribute("poster",posterImg);
         myVideoHtml.load();
         console.log("myVideoHtml is loaded");
     }

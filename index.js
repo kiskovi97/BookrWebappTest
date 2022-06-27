@@ -3,6 +3,7 @@ var spinnerLoaderForMenu = document.getElementById("theSpinnerLoaderForMenu");
 var spinnerLoader = document.getElementById("theSpinnerLoader");
 let bookListHtmlItem = document.getElementById("book-list");
 let videoPlayerBoyHtml = document.getElementById("video_player_box");
+var myVideoHtml = document.getElementById("my-video");
 var isCurrentBookFree = true;
 var src = "";
 var started = new Date();
@@ -12,7 +13,7 @@ function myStartHandler(e) {
     started = new Date();
     if (!isCurrentBookFree) {
         console.log("Book is not free!");
-        document.getElementById("my-video").pause();
+        myVideoHtml.pause();
         alert("This book is not free!");
     }
 }
@@ -52,7 +53,7 @@ function playVideo() {
     Loading(false);
     console.log("in playVideo() function isCurrentBookFree : " + isCurrentBookFree);
     if (isCurrentBookFree) {
-      document.getElementById("my-video").play();
+        myVideoHtml.play();
     } else {
       alert("This book is not free!");
       console.log("This book is not free!");
@@ -101,13 +102,12 @@ function BookDataRecived(jsonData)
     }
     var myVideoSrc = document.getElementById("videosrc");
     if (myVideoSrc) myVideoSrc.src = src;
-    var myVideo = document.getElementById("my-video");
-    if (myVideo) {
-        myVideo.load();
-        myVideo.addEventListener('ended',myEndHandler,false);
-        myVideo.addEventListener('pause',myEndHandler,false);
-        myVideo.addEventListener('play',myStartHandler,false);
-        myVideo.setAttribute("poster",posterImg);
+    if (myVideoHtml) {
+        myVideoHtml.load();
+        myVideoHtml.addEventListener('ended',myEndHandler,false);
+        myVideoHtml.addEventListener('pause',myEndHandler,false);
+        myVideoHtml.addEventListener('play',myStartHandler,false);
+        myVideoHtml.setAttribute("poster",posterImg);
     }
     
     if (params.book){
@@ -135,6 +135,7 @@ function LoadMobile()
 
     bookListHtmlItem.hidden = true;
     videoPlayerBoyHtml.hidden = true;
+    myVideoHtml.pause();
     /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
     document.getElementById("my-video").addEventListener("timeupdate", function() {
     // if the video is loaded and duration is known

@@ -61,11 +61,14 @@ function BookDataRecived(jsonData, isLoggedIn)
     //var src = "";
     var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
 
+    var accessTokenQuery="";
+    if (params.accessToken)
+        accessTokenQuery = "&accessToken="+params.accessToken;
     for (var id in jsonData.result.list) {
         var book = jsonData.result.list[id];
 
         const li = document.createElement('li');
-        li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.title+`</a></h3>`;
+        li.innerHTML = `<h3><a href="?book=`+book.id+ accessTokenQuery+ `">`+book.title+`</a></h3>`;
         if (bookListHtmlItem) bookListHtmlItem.appendChild(li);
 
         if (book.id == params.book) {

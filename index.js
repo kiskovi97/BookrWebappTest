@@ -78,6 +78,7 @@ function playPause(btn,vid){
 
 function BookDataRecived(jsonData)
 {
+    isCurrentBookFree = false;
     console.log("books data arrived");
     LoadingMenu(false);
     const params = new Proxy(new URLSearchParams(window.location.search), {

@@ -1,6 +1,8 @@
 
 var spinnerLoaderForMenu = document.getElementById("theSpinnerLoaderForMenu");
 var spinnerLoader = document.getElementById("theSpinnerLoader");
+let bookListHtmlItem = document.getElementById("book-list");
+let videoPlayerBoyHtml = document.getElementById("video_player_box");
 var isCurrentBookFree = true;
 var src = "";
 var started = new Date();
@@ -75,27 +77,27 @@ function playPause(btn,vid){
 
 function BookDataRecived(jsonData)
 {
+    console.log("books data arrived");
     LoadingMenu(false);
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
     //var src = "";
     var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
-    var documentBookList = document.getElementById("book-list");
 
     for (var id in jsonData.result.list) {
-    var book = jsonData.result.list[id];
+        var book = jsonData.result.list[id];
 
-    const li = document.createElement('li');
-    li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.title+`</a></h3>`;
-    if (documentBookList) documentBookList.appendChild(li);
+        const li = document.createElement('li');
+        li.innerHTML = `<h3><a href="?book=`+book.id+`">`+book.title+`</a></h3>`;
+        if (bookListHtmlItem) bookListHtmlItem.appendChild(li);
 
-    if (book.id == params.book) {
-        src = book.previewUrls.original;
-        posterImg = book.coverUrls.optimal;
-        isCurrentBookFree = book.isFree;
-        console.log("isCurrentBookFree : " + isCurrentBookFree);
-    }
+        if (book.id == params.book) {
+            src = book.previewUrls.original;
+            posterImg = book.coverUrls.optimal;
+            isCurrentBookFree = book.isFree;
+            console.log("isCurrentBookFree : " + isCurrentBookFree);
+        }
     }
     var myVideoSrc = document.getElementById("videosrc");
     if (myVideoSrc) myVideoSrc.src = src;
@@ -109,13 +111,11 @@ function BookDataRecived(jsonData)
     }
     
     if (params.book){
-        let myobj3 = document.getElementById("book-list");
-        myobj3.remove();
-        // Turn off the menu booksList waiting spinner
-        LoadingMenu(false);
+        videoPlayerBoyHtml.hidden = false;
+        bookListHtmlItem.remove();
     } else {
-        let myobj2 = document.getElementById("video_player_box");
-        myobj2.remove();
+        bookListHtmlItem.hidden = false;
+        videoPlayerBoyHtml.remove();
     }
 }
 
@@ -133,6 +133,8 @@ function LoadMobile()
         BookDataRecived(jsonData);
     });
 
+    bookListHtmlItem.hidden = true;
+    videoPlayerBoyHtml.hidden = true;
     /* Custom Progressbar - Don't delete it, maybe it can be useful later again - Client asked for it, then changed his mind!
     document.getElementById("my-video").addEventListener("timeupdate", function() {
     // if the video is loaded and duration is known

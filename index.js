@@ -50,9 +50,9 @@ function Loading(isLoading)
     return 
 }
 
-function BookDataRecived(jsonData)
+function BookDataRecived(jsonData, isLoggedIn)
 {
-    isCurrentBookFree = false;
+    isCurrentBookFree = isLoggedIn;
     console.log("books data arrived");
     LoadingMenu(false);
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -77,7 +77,7 @@ function BookDataRecived(jsonData)
             }
             
             posterImg = book.coverUrls.optimal;
-            isCurrentBookFree = book.isFree;
+            isCurrentBookFree = isCurrentBookFree || book.isFree;
             console.log("isCurrentBookFree : " + isCurrentBookFree);
         }
     }
@@ -123,8 +123,23 @@ function LoadMobile()
         return response.json();
     })
     .then(jsonData =>  {		  
-        // Turn off the menu booksList waiting spinner
-        BookDataRecived(jsonData);
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        if (params.accessToken)
+        {
+            fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
+                method: 'get', 
+                headers: new Headers({
+                    'Authorization': 'Basic '+ params.accessToken, 
+                    'Content-Type': 'application/json'
+                })
+            }).then(response => {
+                BookDataRecived(jsonData, true);
+            })
+        } else {
+            BookDataRecived(jsonData, false);
+        }
     });
 
     bookListHtmlItem.hidden = true;

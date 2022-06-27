@@ -131,7 +131,7 @@ function LoadMobile()
             fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
                 method: 'get', 
                 headers: new Headers({
-                    'Authorization': 'Basic '+ params.accessToken, 
+                    'Authorization': 'Bearer '+ params.accessToken, 
                     'Content-Type': 'application/json'
                 })
             }).then(response => {

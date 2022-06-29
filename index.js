@@ -138,7 +138,7 @@ function LoadMobile()
                     'Content-Type': 'application/json'
                 })
             }).then(response => {
-                BookDataRecived(jsonData, true);
+                BookDataRecived(jsonData, response.ok);
             }).catch((error) => {
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
@@ -149,7 +149,7 @@ function LoadMobile()
             var path = "https://api.v2.bookrclass.com/api/oauth/token/sso";
             fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
             .then(response => {
-                BookDataRecived(jsonData, true);
+                BookDataRecived(jsonData, response.ok);
             }).catch((error) => {
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
@@ -160,7 +160,7 @@ function LoadMobile()
         }
     }).catch((error) => {
         console.error('Error:', error);
-        BookDataRecived(jsonData, false);
+        BookDataRecived({result: {list: [0]}}, false);
     });;
 
     bookListHtmlItem.hidden = true;

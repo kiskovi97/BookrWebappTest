@@ -145,7 +145,7 @@ function LoadMobile()
             });
         } else if (params.ssoid && params.token) {
             //Login with deeplink provided token
-            var body = { "token": ssoToken, "sso_id": ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
+            var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
             var path = "https://api.v2.bookrclass.com/api/oauth/token/sso";
             fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
             .then(response => {

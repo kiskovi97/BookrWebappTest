@@ -143,7 +143,19 @@ function LoadMobile()
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
             });
-        } else {
+        } else if (params.ssoid && params.token) {
+            //Login with deeplink provided token
+            var body = { "token": ssoToken, "sso_id": ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
+            var path = "https://api.v2.bookrclass.com/api/oauth/token/sso";
+            fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
+            .then(response => {
+                BookDataRecived(jsonData, true);
+            }).catch((error) => {
+                console.error('Error:', error);
+                BookDataRecived(jsonData, false);
+            });
+        }
+        else {
             BookDataRecived(jsonData, false);
         }
     }).catch((error) => {

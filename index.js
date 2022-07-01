@@ -58,6 +58,9 @@ function BookDataRecived(jsonData, isLoggedIn)
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
+    var bookId = params.book;
+    if (!bookId)
+        bookId = params.bookId;
     //var src = "";
     var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
 
@@ -71,7 +74,7 @@ function BookDataRecived(jsonData, isLoggedIn)
         li.innerHTML = `<h3><a href="?book=`+book.id+ accessTokenQuery+ `">`+book.title+`</a></h3>`;
         if (bookListHtmlItem) bookListHtmlItem.appendChild(li);
 
-        if (book.id == params.book) {
+        if (book.id == bookId) {
             if (book.previewUrls)
             {
                 src = book.previewUrls.original;
@@ -85,7 +88,7 @@ function BookDataRecived(jsonData, isLoggedIn)
         }
     }
     
-    if (params.book){
+    if (bookId){
         videoPlayerBoyHtml.hidden = false;
         bookListHtmlItem.remove();
     } else {
@@ -139,10 +142,7 @@ function LoadMobile()
                 })
             }).then(response => {
                 BookDataRecived(jsonData, response.ok);
-            }).catch((error) => {
-                console.error('Error:', error);
-                BookDataRecived(jsonData, false);
-            });
+            })
         } else if (params.ssoid && params.token) {
             //Login with deeplink provided token
             var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
@@ -154,14 +154,10 @@ function LoadMobile()
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
             });
+        } else {
+            BookDataRecived({result: {list: [0]}}, false);
         }
-        else {
-            BookDataRecived(jsonData, false);
-        }
-    }).catch((error) => {
-        console.error('Error:', error);
-        BookDataRecived({result: {list: [0]}}, false);
-    });;
+    });
 
     bookListHtmlItem.hidden = true;
     videoPlayerBoyHtml.hidden = true;
@@ -177,5 +173,3 @@ function LoadMobile()
     });
     */
 }
-
-	  

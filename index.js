@@ -149,7 +149,7 @@ function LoadMobile()
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
             });
-        } else if (params.ssoid && params.token) {
+        } else if (params.ssoId && params.token) {
             //Login with deeplink provided token
             console.log("ssoid login started");
             var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};

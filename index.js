@@ -122,10 +122,12 @@ function BookDataRecived(jsonData, isLoggedIn)
 function LoadMobile()
 {
     LoadingMenu(true);
+    console.log("started loading mobile");
     //fetch("./StreamingAssets/books/booklist.json")
     //fetch("https://bookrlab.com/webvideo/booksList.php")
     fetch("https://api.v2.bookrclass.com/api/mobile/books")
     .then(response => {
+        console.log("Books recived");
         return response.json();
     })
     .then(jsonData =>  {		  
@@ -134,6 +136,7 @@ function LoadMobile()
         });
         if (params.accessToken)
         {
+            console.log("accessToken login started");
             fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
                 method: 'get', 
                 headers: new Headers({
@@ -142,9 +145,13 @@ function LoadMobile()
                 })
             }).then(response => {
                 BookDataRecived(jsonData, response.ok);
-            })
+            }).catch((error) => {
+                console.error('Error:', error);
+                BookDataRecived(jsonData, false);
+            });
         } else if (params.ssoid && params.token) {
             //Login with deeplink provided token
+            console.log("ssoid login started");
             var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
             var path = "https://api.v2.bookrclass.com/api/oauth/token/sso";
             fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
@@ -155,8 +162,12 @@ function LoadMobile()
                 BookDataRecived(jsonData, false);
             });
         } else {
+            console.log("no login parameter is found");
             BookDataRecived({result: {list: [0]}}, false);
         }
+    }).catch((error) => {
+        console.error('Error:', error);
+        BookDataRecived(jsonData, false);
     });
 
     bookListHtmlItem.hidden = true;

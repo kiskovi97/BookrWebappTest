@@ -157,7 +157,7 @@ function LoadMobile()
         } else if (params.ssoId && params.token) {
             //Login with deeplink provided token
             console.log("ssoid login started");
-            var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
+            var body = { "token": params.token, "sso_id": params.ssoId, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
             var path =  "oauth/token/sso";
             if (ssoOverride[params.ssoId])
                 path = ssoOverride[params.ssoId] + path;

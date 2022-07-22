@@ -7,6 +7,11 @@ var myVideoHtml = document.getElementById("my-video");
 var isCurrentBookFree = true;
 var src = "";
 var started = new Date();
+var ssoOverride = {
+    prod : "https://api.v2.bookrclass.com/api/",
+    staging : "https://api.staging2.v2.bookrclass.com/api/",
+    "vcloud-mock": "https://bookr-sso-mock-creatit-server.herokuapp.com/api/"
+}
 
 function myStartHandler(e) {
     console.log("play event was called");
@@ -153,7 +158,11 @@ function LoadMobile()
             //Login with deeplink provided token
             console.log("ssoid login started");
             var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
-            var path = "https://api.v2.bookrclass.com/api/oauth/token/sso";
+            var path =  "oauth/token/sso";
+            if (ssoOverride[params.ssoId])
+                path = ssoOverride[params.ssoId];
+            else
+                path = ssoOverride.prod + path;
             fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
             .then(response => {
                 BookDataRecived(jsonData, response.ok);

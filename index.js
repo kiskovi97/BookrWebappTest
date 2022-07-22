@@ -160,7 +160,7 @@ function LoadMobile()
             var body = { "token": params.token, "sso_id": params.ssoid, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
             var path =  "oauth/token/sso";
             if (ssoOverride[params.ssoId])
-                path = ssoOverride[params.ssoId];
+                path = ssoOverride[params.ssoId] + path;
             else
                 path = ssoOverride.prod + path;
             fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})

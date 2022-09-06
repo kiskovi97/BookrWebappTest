@@ -103,7 +103,7 @@
   </head>
   <body style="text-align: center">
 	<div id="theSpinnerLoaderForMenu" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
-    <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg') center / cover"></canvas>
+    <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg.unityweb') center / cover"></canvas>
 	<div id="video_player_box" style="text-align: center">
 		<div id="theSpinnerLoader" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
 		<figure>
@@ -130,7 +130,7 @@
         web browser that
     </video-->
     <ul id="book-list"></ul>
-    <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
+    <script src="Build/93.loader.js"></script>
     <script src="baseFunctions.js"></script>
     <script src="index.js"></script>
     <script>
@@ -146,14 +146,16 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/615ecf40fb4ffdef91bc7552d2593584.data.unityweb",
-            frameworkUrl: "Build/2e4a075011abb880f249dc2aa1380158.js.unityweb",
-            codeUrl: "Build/66379863e92d22fb930269cbcb2a36be.wasm.unityweb",
+            dataUrl: "Build/f23aafa949e4e36d22d300eb9399d29f.data.unityweb",
+            frameworkUrl: "Build/a464d2eb72b3422139ec25529a2fd7f2.js.unityweb",
+            codeUrl: "Build/3c2a155934551ce964862484264c19fb.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",
             productVersion: "1.0.8",
-          });
+          }).then((unityInstance) => {
+			window.unityInstance = unityInstance;
+		  });
       }
     </script>
   </body>

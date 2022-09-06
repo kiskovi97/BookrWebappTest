@@ -229,7 +229,7 @@ function BookDataRecived(jsonData, isLoggedIn)
         accessTokenQuery = "&accessToken="+params.accessToken;
     for (var id in jsonData.result.list) {
         var book = jsonData.result.list[id];
-        if (!acceptedIds.includes(book.id))
+        if (!acceptedIds.includes(book.id.toString()))
             return;
 		
 		currentBooksNumOfPages = book.numberOfPages;

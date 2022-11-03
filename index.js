@@ -12,6 +12,14 @@ var ssoOverride = {
     staging : "https://api.staging2.v2.bookrclass.com/api/",
     "vcloud-mock": "https://bookr-sso-mock-creatit-server.herokuapp.com/api/"
 }
+var currentBooksNumOfPages = 0;
+var currentChildId = null;
+
+var ssoUsersAccessToken = null;
+var ssoBasePath = null;
+
+var currentVideoSeekerPosition = 0;
+var acceptedIds = [];
 
 function myStartHandler(e) {
     console.log("play event was called");
@@ -30,17 +38,163 @@ function myEndHandler(e) {
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
+	
+	let allPagesVisited = [...Array(currentBooksNumOfPages).keys()];
+	let lastPageIndex = currentBooksNumOfPages - 1;
+	
     var result = {
         bookId: params.book,
         userId: null,
         startedAt: started,
         duration: distance,
-        pagesVisited: [],
-        lastPageVisited: 0,
+        pagesVisited: allPagesVisited,
+        lastPageVisited: lastPageIndex,
     };
     var resultJson = JSON.stringify(result)
     console.log(resultJson)
     window.top.postMessage(resultJson, '*');
+	sendBookReadingDataToBackend(resultJson, params);
+}
+
+function myPauseHandler(e) {
+	var ended = new Date();
+    var distance = (ended.getTime() - started.getTime()) / 1000;
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+	
+	let allPagesVisited = [...Array(currentBooksNumOfPages).keys()];
+	let lastPageIndex = currentBooksNumOfPages - 1;
+	
+	let currPagesVisited = currentVideoSeekerPosition > 80 ? allPagesVisited : [0];
+	
+    var result = {
+        bookId: params.book,
+        userId: null,
+        startedAt: started,
+        duration: distance,
+        pagesVisited: currPagesVisited,
+        lastPageVisited: lastPageIndex,
+    };
+    var resultJson = JSON.stringify(result)
+    console.log(resultJson)
+    window.top.postMessage(resultJson, '*');
+	sendBookReadingDataToBackend(result, params);
+}
+
+function sendBookReadingDataToBackend(result, params) {
+	
+	let res = {
+		startedAt: result.startedAt,
+		duration: result.duration,
+		pagesVisited: result.pagesVisited,
+		lastPageVisited: result.lastPageVisited,
+		bookId: result.bookId
+	}
+	
+	let toSend = {
+		results: [
+			res
+		]
+	}
+	
+	var resultJson = JSON.stringify(toSend);
+	
+	if (currentChildId != undefined && currentChildId != null && (params.accessToken || (params.ssoId && params.token))) {
+		
+		console.log("Book Reading Data sent to server : " + resultJson);
+		
+		if (!params.accessToken && !ssoBasePath)
+			return;
+		
+		let bookReadingDataEndpoint = "https://api.v2.bookrclass.com/api/mobile/child/" + currentChildId + "/readBook";
+		
+		let bookReadingDataEndpointPrefix = "mobile/child/";
+		let bookReadingDataEndpointSufix = "/readBook";
+		
+		let bReadingEndpointEnding = bookReadingDataEndpointPrefix + currentChildId + bookReadingDataEndpointSufix;
+		let ssoReadingEndpoint = ssoBasePath + bReadingEndpointEnding;
+		
+		let fullCurrentReadingEndpoint = params.accessToken ? bookReadingDataEndpoint : ssoReadingEndpoint;
+		
+		let authToken = params.accessToken ? params.accessToken : ssoUsersAccessToken;
+	
+		fetch(fullCurrentReadingEndpoint, {
+			method: 'POST',
+			headers: new Headers({
+                    'Authorization': 'Bearer '+ authToken, 
+                    'Content-Type': 'application/json'
+                }),
+			body: resultJson})
+			.then(response => response.json())
+			.then(data => {
+				console.log("Child's Reading Data successfully sent to server!");
+				console.log("Server response : " + data);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	}
+}
+
+function pauseBook() {
+	if (isVideoPlayerNeeded()) {
+		myVideoHtml.pause();
+	} else {
+		window.unityInstance.SendMessage('JavaScriptHook', 'PauseBook');
+	}
+}
+
+function startBook() {
+	if (isVideoPlayerNeeded()) {
+		myVideoHtml.play();
+	} else {
+		window.unityInstance.SendMessage('JavaScriptHook', 'StartBook');
+	}
+}
+
+
+function toggleStartPause() {
+	if (isVideoPlayerNeeded()) {
+		if (myVideoHtml.paused == true) {
+			myVideoHtml.play();
+		} else {
+			myVideoHtml.pause();
+		}
+	} else {
+		window.unityInstance.SendMessage('JavaScriptHook', 'TogglePauseBook');
+	}
+}
+
+window.addEventListener('message', event => {
+    if (event.data === "toggleStartPause")
+        toggleStartPause();
+    else if (event.data === "startBook")
+        startBook();
+    else if (event.data === "pauseBook")
+        pauseBook();
+});
+
+function myMoreThanEigthyPercentReachedHandler(seekerPercent) {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+	
+	let allPagesVisited = [...Array(currentBooksNumOfPages).keys()];
+	let lastPageIndex = currentBooksNumOfPages - 1;
+	
+    var result = {
+        bookId: params.book,
+        userId: null,
+        startedAt: started,
+        duration: seekerPercent,
+        pagesVisited: allPagesVisited,
+        lastPageVisited: lastPageIndex,
+    };
+    var resultJson = JSON.stringify(result)
+    console.log(resultJson)
+    window.top.postMessage(resultJson, '*');
+	sendBookReadingDataToBackend(result, params);
 }
 
 function LoadingMenu(isLoading)
@@ -57,7 +211,8 @@ function Loading(isLoading)
 
 function BookDataRecived(jsonData, isLoggedIn)
 {
-    isCurrentBookFree = isLoggedIn;
+	console.log("isLoggedIn : " + isLoggedIn);	
+    isCurrentBookFree = true;
     console.log("books data arrived");
     LoadingMenu(false);
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -74,6 +229,10 @@ function BookDataRecived(jsonData, isLoggedIn)
         accessTokenQuery = "&accessToken="+params.accessToken;
     for (var id in jsonData.result.list) {
         var book = jsonData.result.list[id];
+        if (!acceptedIds.includes(book.id.toString()))
+            return;
+		
+		currentBooksNumOfPages = book.numberOfPages;
 
         const li = document.createElement('li');
         li.innerHTML = `<h3><a href="?book=`+book.id+ accessTokenQuery+ `">`+book.title+`</a></h3>`;
@@ -106,8 +265,18 @@ function BookDataRecived(jsonData, isLoggedIn)
     if (myVideoHtml) {
         console.log("myVideoHtml is loading");
         myVideoHtml.addEventListener('ended',myEndHandler);
-        myVideoHtml.addEventListener('pause',myEndHandler);
+        myVideoHtml.addEventListener('pause',myPauseHandler);
         myVideoHtml.addEventListener('play',myStartHandler);
+		myVideoHtml.addEventListener('timeupdate', () => {
+		  let seekerPercent = myVideoHtml.currentTime / myVideoHtml.duration * 100;
+		  
+		  currentVideoSeekerPosition = seekerPercent;
+		  
+		  if (seekerPercent > 80) {
+			  myMoreThanEigthyPercentReachedHandler(seekerPercent);
+		  }
+		});
+		
         /*myVideoHtml.addEventListener("click", function(event) { 
             console.log("isPlaying" + myVideoHtml.paused );
             console.log("onClick");
@@ -124,60 +293,121 @@ function BookDataRecived(jsonData, isLoggedIn)
     }
 }
 
+function fetchAllData() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    var bookId = params.book;
+    if (!bookId)
+        bookId = params.bookId;
+
+    // production:
+    let bookDataUrl = bookId ? "https://api.v2.bookrclass.com/api/mobile/books?filters[id][]=" + bookId : "https://api.v2.bookrclass.com/api/mobile/books";
+
+	// staging:
+	//let bookDataUrl = bookId ? "https://api.staging.v2.bookrclass.com/api/mobile/books?filters[id][]=" + bookId : "https://api.staging.v2.bookrclass.com/api/mobile/books";
+
+    fetch(bookDataUrl)
+        .then(response => {
+            console.log("Books recived");
+            return response.json();
+        })
+        .then(jsonData => {
+            /*const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });*/
+            fetch('https://bookrlab.com/novakids/state/', {
+                method: 'get',
+                headers: new Headers({
+                    'Accept': 'application/json'
+                })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                // console.log(data);
+                // console.log("user id is : " + data.result.id);
+                BookDataRecived(jsonData, data.isActive);
+                currentChildId = null;
+            }).catch((error) => {
+                console.error('Error:', error);
+                BookDataRecived(jsonData, false);
+            });
+            /*if (params.accessToken)
+            {
+                console.log("accessToken login started");
+                fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
+                    method: 'get', 
+                    headers: new Headers({
+                        'Authorization': 'Bearer '+ params.accessToken, 
+                        'Content-Type': 'application/json'
+                    })
+                }).then(response => {
+                    BookDataRecived(jsonData, response.ok);
+                    return response.json();
+                }).then(data => {
+                    // console.log(data);
+                    // console.log("user id is : " + data.result.id);
+                    currentChildId = data.result.id;
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    BookDataRecived(jsonData, false);
+                });
+            } else if (params.ssoId && params.token) {
+                //Login with deeplink provided token
+                console.log("ssoid login started");
+                var body = { "token": params.token, "sso_id": params.ssoId, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
+                var path =  "oauth/token/sso";
+                if (ssoOverride[params.ssoId])
+                    path = ssoOverride[params.ssoId] + path;
+                else
+                    path = ssoOverride.prod + path;
+                ssoBasePath = path.replace("oauth/token/sso", "");
+                fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
+                .then(response => {
+                    BookDataRecived(jsonData, response.ok);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    console.log("user id is : " + data.user.id);
+                    currentChildId = data.user.id;
+                    ssoUsersAccessToken = data.access_token;
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    BookDataRecived(jsonData, false);
+                });
+            } else {
+                console.log("no login parameter is found");
+                //BookDataRecived({result: {list: [0]}}, false);
+                BookDataRecived(jsonData, false);
+            }*/
+        }).catch((error) => {
+            console.error('Error:', error);
+            BookDataRecived(jsonData, false);
+        });
+
+}
+
+function fetchAcceptedBooks() {
+    fetch("./StreamingAssets/books/booklist.json")
+        .then(response => {
+            return response.json();
+        }).then(jsonData => {
+            acceptedIds = jsonData.map(item => item.id);
+            fetchAllData();
+        });
+}
+
 function LoadMobile()
 {
     LoadingMenu(true);
     console.log("started loading mobile");
     //fetch("./StreamingAssets/books/booklist.json")
     //fetch("https://bookrlab.com/webvideo/booksList.php")
-    fetch("https://api.v2.bookrclass.com/api/mobile/books")
-    .then(response => {
-        console.log("Books recived");
-        return response.json();
-    })
-    .then(jsonData =>  {		  
-        const params = new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop),
-        });
-        if (params.accessToken)
-        {
-            console.log("accessToken login started");
-            fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
-                method: 'get', 
-                headers: new Headers({
-                    'Authorization': 'Bearer '+ params.accessToken, 
-                    'Content-Type': 'application/json'
-                })
-            }).then(response => {
-                BookDataRecived(jsonData, response.ok);
-            }).catch((error) => {
-                console.error('Error:', error);
-                BookDataRecived(jsonData, false);
-            });
-        } else if (params.ssoId && params.token) {
-            //Login with deeplink provided token
-            console.log("ssoid login started");
-            var body = { "token": params.token, "sso_id": params.ssoId, "client_id" : 2, "client_secret" : "BookrAWOauthClientDummySecret4Mobile0000"};
-            var path =  "oauth/token/sso";
-            if (ssoOverride[params.ssoId])
-                path = ssoOverride[params.ssoId] + path;
-            else
-                path = ssoOverride.prod + path;
-            fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
-            .then(response => {
-                BookDataRecived(jsonData, response.ok);
-            }).catch((error) => {
-                console.error('Error:', error);
-                BookDataRecived(jsonData, false);
-            });
-        } else {
-            console.log("no login parameter is found");
-            BookDataRecived({result: {list: [0]}}, false);
-        }
-    }).catch((error) => {
-        console.error('Error:', error);
-        BookDataRecived(jsonData, false);
-    });
+    //fetch("https://api.v2.bookrclass.com/api/mobile/books")
+
+    fetchAcceptedBooks();
 
     bookListHtmlItem.hidden = true;
     videoPlayerBoyHtml.hidden = true;
@@ -193,3 +423,5 @@ function LoadMobile()
     });
     */
 }
+
+window.onblur = (event) => { pauseBook(); };

@@ -100,11 +100,31 @@
 	}
 
     </style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body style="text-align: center">
+	<!-- Book Not Free Popup Modal -->
+	<div class="modal fade" id="bookNotFreeModal" tabindex="-1" role="dialog" aria-labelledby="bookNotFreeModalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header text-center">
+			  <h5 class="modal-title text-center" id="subscriptionNeededModalLongTitle">Subscription needed</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body text-center display-4">
+			  ...
+			</div>
+			<div class="modal-footer  justify-content-center">
+			  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+			</div>
+		  </div>
+		</div>
+	</div>
 	<div id="theSpinnerLoaderForMenu" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
-    <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg') center / cover"></canvas>
-	<div id="video_player_box" style="text-align: center">
+    <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg.unityweb') center / cover"></canvas>
+	<div id="video_player_box" style="text-align: center; display: none;">
 		<div id="theSpinnerLoader" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
 		<figure>
 			<video id="my-video" playsinline autoplay controls poster="./bookr-class-logo-with-bg.jpg">
@@ -130,7 +150,10 @@
         web browser that
     </video-->
     <ul id="book-list"></ul>
-    <script src="Build/25fa751264f29618c1b864e61a38990f.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="Build/55.loader.js"></script>
     <script src="baseFunctions.js"></script>
     <script src="index.js"></script>
     <script>
@@ -146,14 +169,16 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/615ecf40fb4ffdef91bc7552d2593584.data.unityweb",
-            frameworkUrl: "Build/2e4a075011abb880f249dc2aa1380158.js.unityweb",
-            codeUrl: "Build/66379863e92d22fb930269cbcb2a36be.wasm.unityweb",
+            dataUrl: "Build/463fe3b9610dd44312f09291e75061b3.data.unityweb",
+            frameworkUrl: "Build/81d8895e784a91775031c0888cc35171.js.unityweb",
+            codeUrl: "Build/08cdb992668da7eb84a7a8bb24bd1e89.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",
-            productVersion: "1.0.8",
-          });
+            productVersion: "0.1.3",
+          }).then((unityInstance) => {
+			window.unityInstance = unityInstance;
+		  });
       }
     </script>
   </body>

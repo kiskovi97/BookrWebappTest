@@ -7,9 +7,9 @@ var myVideoHtml = document.getElementById("my-video");
 var isCurrentBookFree = true;
 var src = "";
 var started = new Date();
-const apiBase = "https://sofatutor-staging.v2.bookrclass.com/api/";
 var ssoOverride = {
-    prod : apiBase,
+    prod : "https://api.v2.bookrclass.com/api/",
+    staging : "https://api.staging2.v2.bookrclass.com/api/",
     "vcloud-mock": "https://bookr-sso-mock-creatit-server.herokuapp.com/api/"
 }
 var currentBooksNumOfPages = 0;
@@ -21,6 +21,18 @@ var ssoBasePath = null;
 
 var currentVideoSeekerPosition = 0;
 
+function openLoginAndCloseIFrame() {
+	window.top.postMessage("InternalCmd_BKR_WebGL_Book_Player_Open_Login_and_Close", '*');
+}
+
+function openShopAndCloseIFrame() {
+	window.top.postMessage("InternalCmd_BKR_WebGL_Book_Player_Open_Shop_and_Close", '*');
+}
+
+function closeIFrame() {
+	window.top.postMessage("InternalCmd_BKR_WebGL_Book_Player_Close_Me_Now", '*');
+}
+
 function myStartHandler(e) {
     console.log("play event was called");
     started = new Date();
@@ -29,7 +41,15 @@ function myStartHandler(e) {
         myVideoHtml.pause();
         //alert("This book is not free!");
 		$('#bookNotFreeModal').modal('show');
-		$('.modal-body').html('<strong>Subscribe to see this book!</strong>');
+		
+		if (currentChildId) {
+			document.getElementById("btn-webgl-signin").style.display = "none";
+		}
+		else {
+			document.getElementById("btn-webgl-signin").style.display = "block";
+		}
+		
+		$('.modal-body').html('<img src="./rabbit.png" /><br /><br /><strong style="font-size: 24px">Subscribe to see this book!</strong>');
         /*var href = window.location.href;
         window.location.href = href.split('?')[0];*/
     }
@@ -109,7 +129,7 @@ function sendBookReadingDataToBackend(result, params) {
 		if (!params.accessToken && !ssoBasePath)
 			return;
 		
-		let bookReadingDataEndpoint = apiBase + "mobile/child/" + currentChildId + "/readBook";
+		let bookReadingDataEndpoint = "https://api.v2.bookrclass.com/api/mobile/child/" + currentChildId + "/readBook";
 		
 		let bookReadingDataEndpointPrefix = "mobile/child/";
 		let bookReadingDataEndpointSufix = "/readBook";
@@ -224,7 +244,7 @@ function BookDataRecived(jsonData, isAllowedToSeePaidBooks)
     if (!bookId)
         bookId = params.bookId;
     //var src = "";
-    var posterImg = apiBase + "media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
+    var posterImg = "https://api.v2.bookrclass.com/api/media/Ym9vay1jb3Zlci93LzMvdzNsa3p5ZzFZYW1pQjlxVXJMYU1vSFZseDU1UXJUeGhVT1VvbkVQWUs0LmpwZw==/original_4k.jpg";
 
     var accessTokenQuery="";
     if (params.accessToken)
@@ -309,12 +329,16 @@ function LoadMobile()
         bookId = params.bookId;
 
 	// production:
-	let bookDataUrl = apiBase + "mobile/books"+ (bookId ? "?filters[id][]=" + bookId : "");
+	let bookDataUrl = bookId ? "https://api.v2.bookrclass.com/api/mobile/books?filters[id][]=" + bookId : "https://api.v2.bookrclass.com/api/mobile/books";
+	
+	// staging:
+	//let bookDataUrl = bookId ? "https://api.staging.v2.bookrclass.com/api/mobile/books?filters[id][]=" + bookId : "https://api.staging.v2.bookrclass.com/api/mobile/books";
 	
     LoadingMenu(true);
     console.log("started loading mobile");
     //fetch("./StreamingAssets/books/booklist.json")
     //fetch("https://bookrlab.com/webvideo/booksList.php")
+    //fetch("https://api.v2.bookrclass.com/api/mobile/books")
     fetch(bookDataUrl)
     .then(response => {
         console.log("Books recived");
@@ -327,7 +351,7 @@ function LoadMobile()
         if (params.accessToken)
         {
             console.log("accessToken login started");
-            fetch(apiBase + 'mobile/users/me', { 
+            fetch('https://api.v2.bookrclass.com/api/mobile/users/me', { 
                 method: 'get', 
                 headers: new Headers({
                     'Authorization': 'Bearer '+ params.accessToken, 
@@ -371,27 +395,6 @@ function LoadMobile()
                 console.error('Error:', error);
                 BookDataRecived(jsonData, false);
             });
-        } else if (params.sofatutorToken) {
-            console.log("sofatutorToken login started");
-            var body = { "token": params.sofatutorToken };
-
-            var path =  apiBase + "oauth/sso/sofatutor";
-			ssoBasePath = apiBase;
-            fetch(path, {method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },})
-            .then(response => {
-                BookDataRecived(jsonData, response.ok);
-				return response.json();
-            })
-			.then(data => {
-				console.log(data);
-				console.log("user id is : " + data.user.id);
-				currentChildId = data.user.id;
-				ssoUsersAccessToken = data.access_token;
-			}).catch((error) => {
-                console.error('Error:', error);
-                BookDataRecived(jsonData, false);
-            });
-
         } else {
             console.log("no login parameter is found");
             //BookDataRecived({result: {list: [0]}}, false);

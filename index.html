@@ -13,6 +13,7 @@
           margin: 0;
           color: black;
           position: relative;
+		  background: #D2DBF7;
       }
 
       video_player_box, canvas, iframe, video, figure {
@@ -98,6 +99,16 @@
 	  0% { transform: rotate(0deg); }
 	  100% { transform: rotate(360deg); }
 	}
+	
+	.modal-body img {
+		height: 148px;
+		width: 148px;
+	}
+
+	.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+		background-color: #7D2BE6 !important;
+		font-size: 24px !important;
+	}
 
     </style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -108,22 +119,24 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  <div class="modal-content">
 			<div class="modal-header text-center">
-			  <h5 class="modal-title text-center" id="subscriptionNeededModalLongTitle">Subscription needed</h5>
+			  <h2 class="modal-title text-center" id="subscriptionNeededModalLongTitle">Subscription needed</h2>
 			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			  </button>
 			</div>
-			<div class="modal-body text-center display-4">
+			<div class="modal-body text-center">
 			  ...
 			</div>
 			<div class="modal-footer  justify-content-center">
-			  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+			  <button id="btn-webgl-signin" type="button" class="btn btn-primary subscriptionGateFooterBtn" data-dismiss="modal" onclick="openLoginAndCloseIFrame()">Sign In</button>
+			  <button type="button" class="btn btn-primary subscriptionGateFooterBtn" data-dismiss="modal" onclick="openShopAndCloseIFrame()">Subscribe</button>
+			  <button type="button" class="btn btn-primary subscriptionGateFooterBtn" data-dismiss="modal" onclick="closeIFrame()">Close</button>
 			</div>
 		  </div>
 		</div>
 	</div>
 	<div id="theSpinnerLoaderForMenu" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
-    <canvas id="unity-canvas" style="background: url('Build/a4378e2f7373bd6d0cccd1f09de8f184.jpg.unityweb') center / cover"></canvas>
+    <canvas id="unity-canvas" style="background: #D2DBF7"></canvas>
 	<div id="video_player_box" style="text-align: center; display: none;">
 		<div id="theSpinnerLoader" class="loader" style="z-index: 1000; position: absolute; right: 0; left: 0; top: 0; bottom: 0; margin: auto; display: none;"></div>
 		<figure>
@@ -153,7 +166,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="Build/97.loader.js"></script>
+    <script src="Build/58.loader.js"></script>
     <script src="baseFunctions.js"></script>
     <script src="index.js"></script>
     <script>
@@ -169,13 +182,13 @@
           myobj2.remove();
 
           createUnityInstance(document.querySelector("#unity-canvas"), {
-            dataUrl: "Build/456deb002efb8c808b0d04745ab1c081.data.unityweb",
-            frameworkUrl: "Build/f08a70aacd1f9ad1a29bcce6af7c0f9d.js.unityweb",
-            codeUrl: "Build/b7a6b789c7c935cad25c877a587c7d5c.wasm.unityweb",
+            dataUrl: "Build/237b7d7e2bea4fa0042591613025db59.data.unityweb",
+            frameworkUrl: "Build/ad2d0a899f3e52553a6592902113ed42.js.unityweb",
+            codeUrl: "Build/d47adc11e6152237a231cbebb70ebfa3.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Bookr",
             productName: "Webapp",
-            productVersion: "0.1.5",
+            productVersion: "1.2.3",
           }).then((unityInstance) => {
 			window.unityInstance = unityInstance;
 		  });
